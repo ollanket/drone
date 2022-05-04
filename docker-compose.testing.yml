@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  test-db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: test-db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg_data:/var/lib/posgresql/data
+volumes:
+  pg_data:
