@@ -26,6 +26,8 @@
     "eslint": "^8.14.0",
     "eslint-plugin-jest": "^26.1.5",
     "jest": "^28.0.3",
+    "pg": "^8.7.3",
+    "pgtools": "^0.3.2",
     "supertest": "^6.2.3",
     "ts-jest": "^28.0.1",
     "ts-node": "^10.7.0"
@@ -33,6 +35,9 @@
   "scripts": {
     "build": "tsoa spec-and-routes && tsc --project tsconfig.build.json",
     "start": "node build/src/server.js",
-    "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\""
+    "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
+    "test:up": "docker compose -f docker-compose.testing.yml up -d",
+    "test:down": "docker compose -f docker-compose.testing.yml down",
+    "pg:watch": "pgtyped -w -c config.json"
   }
 }
