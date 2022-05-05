@@ -26,6 +26,12 @@ const main = async () => {
     INSERT INTO photo (id, analysis, location, drone_id, user_id)
     VALUES ('1', 'testAnalysis', '(30,30)', '1', '1')
   `)
+
+  // For org tests
+  await client.query(
+    `INSERT INTO organization (id, name, address) VALUES ('1001', 'orgTest', 'testAddress')`
+  )
+
   await client.end()
 }
 main()
