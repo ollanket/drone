@@ -7,7 +7,7 @@ export default (app: express.Application) => {
     swaggerUi.serve,
     async (_req: ExRequest, res: ExResponse) => {
       return res.send(
-        swaggerUi.generateHTML(await import('../build/swagger.json'))
+        swaggerUi.generateHTML(await import('../../build/swagger.json'))
       )
     }
   )

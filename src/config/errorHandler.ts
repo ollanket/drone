@@ -4,7 +4,7 @@ import {
   NextFunction,
   Application as ExApplication
 } from 'express'
-import { ApiError } from 'src/utils/ApiError'
+import { ApiError } from '../utils/ApiError'
 import { ValidateError } from 'tsoa'
 
 export default (app: ExApplication) =>

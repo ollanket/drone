@@ -10,7 +10,6 @@
   "failOnError": false,
   "camelCaseColumnNames": false,
   "db": {
-    "host": "localhost:5432",
     "user": "user",
     "dbName": "test-db",
     "password": "pass"

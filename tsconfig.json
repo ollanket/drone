@@ -24,8 +24,8 @@
 
     /* Module Resolution Options */
     "moduleResolution": "node",
-    "baseUrl": ".",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
 
     /* Experimental Options */
     "experimentalDecorators": true,
