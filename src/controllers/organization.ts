@@ -5,6 +5,7 @@ import {
 } from '../services/organization'
 import { Body, Controller, Get, Path, Post, Response, Route } from 'tsoa'
 import { ApiErrorType, ValidateErrorJSON } from '../utils/ApiError'
+import client from '../client'
 
 @Route('organization')
 export class OrganizationsController extends Controller {
@@ -14,7 +15,7 @@ export class OrganizationsController extends Controller {
   @Response<ApiErrorType>(500, 'Internal Server error')
   @Get()
   public async getOrganizations(): Promise<Array<Organization>> {
-    return new OrganizationsService().findMany()
+    return new OrganizationsService(client).findMany()
   }
   /**
    * Retrieves an organization by id
@@ -26,7 +27,7 @@ export class OrganizationsController extends Controller {
   public async getOrganization(
     @Path() organizationId: number
   ): Promise<Organization> {
-    const response = new OrganizationsService().find(organizationId)
+    const response = new OrganizationsService(client).find(organizationId)
     return response
   }
 
@@ -41,6 +42,6 @@ export class OrganizationsController extends Controller {
     @Body() organization: OrganizationCreationParams
   ): Promise<Organization> {
     this.setStatus(201)
-    return new OrganizationsService().create(organization)
+    return new OrganizationsService(client).create(organization)
   }
 }
