@@ -46,4 +46,17 @@ describe('Organization route', () => {
     expect(body.name).toEqual(data.name)
     expect(body.address).toEqual(data.address)
   })
+
+  test('DELETE /organization', async () => {
+    const { status, body } = await request.delete(`${url}/1001`)
+    expect(status).toBe(200)
+    expect(body.id).toBe(1001)
+    expect(body.name).toEqual('orgTest')
+    expect(body.address).toEqual('testAddress')
+  })
+
+  test('DELETE /organization when it does not exist', async () => {
+    const { status } = await request.delete(`${url}/9001`)
+    expect(status).toBe(404)
+  })
 })

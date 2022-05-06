@@ -9,8 +9,11 @@ export class ApiError extends Error {
 
 export interface ApiErrorType {
   name: string
-  statusCode: number
   message?: string
+}
+
+export interface InternalError {
+  message: 'Internal Server Error'
 }
 
 export interface ValidateErrorJSON {
