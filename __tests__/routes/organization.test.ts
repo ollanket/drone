@@ -47,7 +47,7 @@ describe('Organization route', () => {
     expect(body.address).toEqual(data.address)
   })
 
-  test('DELETE /organization', async () => {
+  test('DELETE /organization/:organizationId', async () => {
     const { status, body } = await request.delete(`${url}/1001`)
     expect(status).toBe(200)
     expect(body.id).toBe(1001)
@@ -55,8 +55,48 @@ describe('Organization route', () => {
     expect(body.address).toEqual('testAddress')
   })
 
-  test('DELETE /organization when it does not exist', async () => {
+  test('DELETE /organization/:organizationId when it does not exist', async () => {
     const { status } = await request.delete(`${url}/9001`)
+    expect(status).toBe(404)
+  })
+
+  test('PATCH /organization/:organizationId', async () => {
+    const data = {
+      name: 'updated',
+      address: 'updated'
+    }
+    const { status, body } = await request
+      .patch(`${url}/2014`)
+      .set('Accept', 'application/json')
+      .send(data)
+    expect(status).toBe(200)
+    expect(body.id).toBe(2014)
+    expect(body.name).toEqual(data.name)
+    expect(body.address).toEqual(data.address)
+  })
+
+  test('PATCH /organization/:organizationId only updating one field', async () => {
+    const data = {
+      name: 'updated2'
+    }
+    const { status, body } = await request
+      .patch(`${url}/2015`)
+      .set('Accept', 'application/json')
+      .send(data)
+    expect(status).toBe(200)
+    expect(body.id).toBe(2015)
+    expect(body.name).toEqual(data.name)
+    expect(body.address).toEqual('updateAddress')
+  })
+
+  test('PATCH /organization/:organizationId when does not exist', async () => {
+    const data = {
+      name: 'updated2'
+    }
+    const { status } = await request
+      .patch(`${url}/13131`)
+      .set('Accept', 'application/json')
+      .send(data)
     expect(status).toBe(404)
   })
 })

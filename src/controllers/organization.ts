@@ -8,6 +8,7 @@ import {
   Controller,
   Delete,
   Get,
+  Patch,
   Path,
   Post,
   Response,
@@ -20,6 +21,7 @@ import {
   ValidateErrorJSON
 } from '../utils/ApiError'
 import client from '../client'
+import { IUpdateOrganizationParams } from '../queries/organization/organization.queries'
 
 @Route('organization')
 @Tags('Organization')
@@ -71,5 +73,28 @@ export class OrganizationsController extends Controller {
     @Path() organizationId: number
   ): Promise<Organization> {
     return new OrganizationsService(client).delete(organizationId)
+  }
+
+  /**
+   * Updates an organization with id
+   * @param organizationId Id of the organization to update
+   * @param organization organization update params
+   */
+  @Response<InternalError>(500, 'Internal Server error')
+  @Response<ApiErrorType>(404, 'Not Found')
+  @Patch('{organizationId}')
+  public async updateOrganization(
+    @Path() organizationId: number,
+    @Body()
+    {
+      name = null,
+      address = null
+    }: Partial<Omit<IUpdateOrganizationParams, 'organization_id'>>
+  ): Promise<Organization> {
+    return new OrganizationsService(client).update({
+      organization_id: organizationId,
+      name,
+      address
+    })
   }
 }

@@ -32,6 +32,16 @@ const main = async () => {
     `INSERT INTO organization (id, name, address) VALUES ('1001', 'orgTest', 'testAddress')`
   )
 
+  // For org update test
+  await client.query(
+    `INSERT INTO organization (id, name, address) VALUES ('2014', 'orgUpdate', 'updateAddress')`
+  )
+
+  // For org update test 2
+  await client.query(
+    `INSERT INTO organization (id, name, address) VALUES ('2015', 'orgUpdate2', 'updateAddress')`
+  )
+
   await client.end()
 }
 main()

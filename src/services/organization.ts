@@ -4,7 +4,9 @@ import {
   createOrganization,
   deleteOrganization,
   findAllOrganizations,
-  findOrganizationById
+  findOrganizationById,
+  IUpdateOrganizationParams,
+  updateOrganization
 } from '../queries/organization/organization.queries'
 import { ApiError } from '../utils/ApiError'
 
@@ -53,6 +55,23 @@ export class OrganizationsService {
         'Not Found',
         404,
         `No organization with id: ${id} was found.`
+      )
+    }
+    return response[0]
+  }
+
+  public async update(
+    organizationUpdateParams: IUpdateOrganizationParams
+  ): Promise<Organization> {
+    const response = await updateOrganization.run(
+      organizationUpdateParams,
+      this.client
+    )
+    if (!response[0]) {
+      throw new ApiError(
+        'Not Found',
+        404,
+        `No organization with id: ${organizationUpdateParams.organization_id} was found.`
       )
     }
     return response[0]
