@@ -21,9 +21,11 @@ RETURNING id, name, address;
 
 /*
   @name UpdateOrganization
-  @param organization -> (name, address)
 */
-UPDATE organization
-SET (name, address) = :organization
-WHERE id = :organization_id
+UPDATE organization SET
+  name = COALESCE(:name, name),
+  address = COALESCE(:address, address)
+WHERE id = :organization_id!
+AND (:name :: TEXT IS NOT NULL AND :name IS DISTINCT FROM name OR
+     :address :: TEXT IS NOT NULL AND :address IS DISTINCT FROM address)
 RETURNING *;

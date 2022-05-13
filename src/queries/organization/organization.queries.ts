@@ -124,11 +124,9 @@ export const deleteOrganization = new PreparedQuery<IDeleteOrganizationParams,ID
 
 /** 'UpdateOrganization' parameters type */
 export interface IUpdateOrganizationParams {
-  organization: {
-    name: string | null | void,
-    address: string | null | void
-  };
-  organization_id: number | null | void;
+  address: string | null | void;
+  name: string | null | void;
+  organization_id: number;
 }
 
 /** 'UpdateOrganization' return type */
@@ -144,14 +142,17 @@ export interface IUpdateOrganizationQuery {
   result: IUpdateOrganizationResult;
 }
 
-const updateOrganizationIR: any = {"name":"UpdateOrganization","params":[{"name":"organization","codeRefs":{"defined":{"a":472,"b":483,"line":24,"col":9},"used":[{"a":550,"b":561,"line":27,"col":23}]},"transform":{"type":"pick_tuple","keys":[{"name":"name","required":false},{"name":"address","required":false}]},"required":false},{"name":"organization_id","required":false,"transform":{"type":"scalar"},"codeRefs":{"used":[{"a":575,"b":589,"line":28,"col":12}]}}],"usedParamSet":{"organization":true,"organization_id":true},"statement":{"body":"UPDATE organization\nSET (name, address) = :organization\nWHERE id = :organization_id\nRETURNING *","loc":{"a":507,"b":601,"line":26,"col":0}}};
+const updateOrganizationIR: any = {"name":"UpdateOrganization","params":[{"name":"name","required":false,"transform":{"type":"scalar"},"codeRefs":{"used":[{"a":509,"b":512,"line":26,"col":19},{"a":597,"b":600,"line":29,"col":6},{"a":627,"b":630,"line":29,"col":36}]}},{"name":"address","required":false,"transform":{"type":"scalar"},"codeRefs":{"used":[{"a":544,"b":550,"line":27,"col":22},{"a":663,"b":669,"line":30,"col":6},{"a":696,"b":702,"line":30,"col":39}]}},{"name":"organization_id","required":true,"transform":{"type":"scalar"},"codeRefs":{"used":[{"a":574,"b":589,"line":28,"col":12}]}}],"usedParamSet":{"name":true,"address":true,"organization_id":true},"statement":{"body":"UPDATE organization SET\n  name = COALESCE(:name, name),\n  address = COALESCE(:address, address)\nWHERE id = :organization_id!\nAND (:name :: TEXT IS NOT NULL AND :name IS DISTINCT FROM name OR\n     :address :: TEXT IS NOT NULL AND :address IS DISTINCT FROM address)\nRETURNING *","loc":{"a":466,"b":740,"line":25,"col":0}}};
 
 /**
  * Query generated from SQL:
  * ```
- * UPDATE organization
- * SET (name, address) = :organization
- * WHERE id = :organization_id
+ * UPDATE organization SET
+ *   name = COALESCE(:name, name),
+ *   address = COALESCE(:address, address)
+ * WHERE id = :organization_id!
+ * AND (:name :: TEXT IS NOT NULL AND :name IS DISTINCT FROM name OR
+ *      :address :: TEXT IS NOT NULL AND :address IS DISTINCT FROM address)
  * RETURNING *
  * ```
  */
