@@ -2,21 +2,21 @@
 SELECT * FROM organization;
 
 /* @name FindOrganizationById */
-SELECT * FROM organization WHERE id = :organizationId;
+SELECT * FROM organization WHERE id = :organizationId!;
 
 /*
   @name CreateOrganization
   @param organization -> (name, address)
  */
 INSERT INTO organization (name, address)
-VALUES :organization
+VALUES :organization!
 RETURNING id, name, address;
 
 /*
   @name DeleteOrganization
 */
 DELETE FROM organization
-WHERE id = :organizationId
+WHERE id = :organizationId!
 RETURNING id, name, address;
 
 /*
